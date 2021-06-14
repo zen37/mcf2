@@ -24,9 +24,16 @@ func payments(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "r.URL.Fragment is: %s\n", r.URL.Fragment)
 }
 
+func payments2(w http.ResponseWriter, r *http.Request) {
+	//fmt.Println(w, r.URL.Path)
+	fmt.Fprintf(w, "200")
+}
+
 func main() {
 
 	http.HandleFunc("/v1/payments/", payments)
+
+	http.HandleFunc("/v2/payments/", payments2)
 
 	log.Fatalln(http.ListenAndServe(address, nil))
 
