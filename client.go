@@ -1,27 +1,42 @@
 package main
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 )
 
-const url string = "http://localhost:8080/v2/payments"
+const url string = "http://localhost:8080/v1/payments"
 
+//curl localhost:8080/v1/payments  -d '{"name":"Hello", "age": 50}'
 func main() {
 
-	fmt.Println("http.Get: ", url)
-	resp, err := http.Get(url)
+	fmt.Println("URL:>", url)
+
+	requestBody, err := json.Marshal(map[string]string{"name": "abcdXD"})
+
+	resp, err := http.Post(url, "application/json", bytes.NewBuffer(requestBody))
+
+	/*
+		req, err := http.NewRequest("POST", url, bytes.NewBuffer(requestBody))
+
+
+			req.Header.Set("X-Custom-Header", "myvalue")
+			req.Header.Set("Content-Type", "application/json")
+			req.Header.Set("User-Agent", "my user agent")
+
+			client := &http.Client{}
+			resp, err := client.Do(req)
+	*/
 	if err != nil {
-		log.Fatalln(err)
+		panic(err)
 	}
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	fmt.Println("response: ", string(body))
-
+	fmt.Println("response Status:", resp.Status)
+	fmt.Println("response Headers:", resp.Header)
+	body, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println("response Body:", string(body))
 }
