@@ -10,12 +10,12 @@ import (
 
 const url string = "http://localhost:8080/v1/payments"
 
-//curl localhost:8080/v1/payments  -d '{"name":"Hello", "age": 50}'
+//curl localhost:1111/v1/payments  -d '{"ID":"123"}'
 func main() {
 
 	fmt.Println("URL:>", url)
 
-	requestBody, err := json.Marshal(map[string]string{"name": "abcdXD"})
+	requestBody, err := json.Marshal(map[string]string{"ID": "hjdha2123h3"})
 
 	resp, err := http.Post(url, "application/json", bytes.NewBuffer(requestBody))
 

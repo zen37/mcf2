@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-const address string = ":8080"
+const address string = ":1111"
 
 func payments(w http.ResponseWriter, r *http.Request) {
 
@@ -39,6 +39,7 @@ func main() {
 
 	http.HandleFunc("/v1/payments", payments)
 
+	log.Println("[main] listening on port", address)
 	log.Fatalln(http.ListenAndServe(address, nil))
 
 }
